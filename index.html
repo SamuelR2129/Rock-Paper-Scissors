@@ -1,0 +1,80 @@
+<script>
+let rounds = prompt("How many games?");
+
+while (!/^\+?(0|[1-9]\d*)$/.test(rounds)){
+    alert("enter a number");
+    let rounds = prompt("How many games?");
+}
+
+let human = 0;
+let machine = 0;
+
+for (let i = 0; i < rounds; i++){
+    //asks for the input
+    let playerSelection = prompt("Rock, Paper or Scissors?");
+    playerSelection = playerSelection.toLowerCase();
+
+
+    //checks if the input works for the game, in a function
+    function pSelect(){
+
+        if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors" ){
+            console.log(playerSelection);
+        } 
+        else {
+            alert("that is not in the game");
+            return;
+        }
+    }
+
+    pSelect(playerSelection);
+
+    //randomly generates a input for the computer
+    let computerSelection = ["rock","paper","scissors"];
+
+    function computerPlay(){
+            computerSelection = computerSelection[Math.floor(Math.random() * computerSelection.length)];
+            console.log(computerSelection);
+    }
+
+    computerPlay(computerSelection);
+
+    function outcome(){
+        if (playerSelection == "rock" && computerSelection == "scissors"){
+            console.log("You win, Rock beats Scissors");
+            human++;
+        } 
+        else if (playerSelection == "rock" && computerSelection == "paper"){
+            console.log("You lose, Paper beats Rock");
+            machine++;
+        }
+        else if (playerSelection == "paper" && computerSelection == "rock"){
+            console.log("You win, Paper beats Rock");
+            human++;
+        }
+        else if (playerSelection == "paper" && computerSelection == "scissors"){
+            console.log("You lose, Paper beats Scissors");
+            machine++;
+        }
+        else if (playerSelection == "scissors" && computerSelection == "rock"){
+            console.log("You lose, Rock beats Scissors");
+            machine++;
+        }
+        else if (playerSelection == "scissors" && computerSelection == "paper"){
+            console.log("You win, Scissors beats Paper");
+            human++;
+        }
+        else {
+            console.log("Draw");
+        }
+    }
+    
+    outcome(playerSelection, computerSelection)
+}
+
+    
+console.log("human: " + human);
+console.log("machine: " + machine);
+
+
+</script>
