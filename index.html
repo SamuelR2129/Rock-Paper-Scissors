@@ -1,80 +1,184 @@
-<script>
-let rounds = prompt("How many games?");
+<html>
+    <header>
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
+        <link rel="stylesheet" href="rock-paper-scissors-style.css">
+    </header>
+    <body>
+        <div class='main'>
+            <div class='container'>
+                <p class="score1">User: <span id="human">0</span></p>
+	            <p class="score2">Computer: <span id="machine">0</span></p>
+                <div id='buttonContainer'>
+                    <button id='rock'>Rock</button>
+                    <button id='paper'>Paper</button>
+                    <button id='scissors'>Scissors</button>
+                </div>
+                    <div id='results'>  
+                        Game Outcome:
+                    </div>
+                </div>
+            </div>
+        </div>
 
-while (!/^\+?(0|[1-9]\d*)$/.test(rounds)){
-    alert("enter a number");
-    let rounds = prompt("How many games?");
-}
 
-let human = 0;
-let machine = 0;
+    </body>
+    <script>
+        //loops for a number input for the games
+        let rounds = prompt("How many games?");
 
-for (let i = 0; i < rounds; i++){
-    //asks for the input
-    let playerSelection = prompt("Rock, Paper or Scissors?");
-    playerSelection = playerSelection.toLowerCase();
-
-
-    //checks if the input works for the game, in a function
-    function pSelect(){
-
-        if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors" ){
-            console.log(playerSelection);
-        } 
-        else {
-            alert("that is not in the game");
-            return;
+        while (!/^\+?(0|[1-9]\d*)$/.test(rounds)){
+            alert("enter a number");
+            rounds = parseInt(prompt("How many games?"));
         }
-    }
 
-    pSelect(playerSelection);
+        let human = 0;
+        let machine = 0;
+        let playerSelection = '';
+        let incrementRound = 0;
 
-    //randomly generates a input for the computer
-    let computerSelection = ["rock","paper","scissors"];
 
-    function computerPlay(){
-            computerSelection = computerSelection[Math.floor(Math.random() * computerSelection.length)];
-            console.log(computerSelection);
-    }
+        //creates a node list of buttons
+        const buttons = document.querySelectorAll('button');
+        
+        //iterate through each button
+        buttons.forEach((button) => {
 
-    computerPlay(computerSelection);
+            //checks for a click
+            button.addEventListener('click', () => {
+                playerSelection = (button.id);
+                incrementRound++;
 
-    function outcome(){
-        if (playerSelection == "rock" && computerSelection == "scissors"){
-            console.log("You win, Rock beats Scissors");
-            human++;
-        } 
-        else if (playerSelection == "rock" && computerSelection == "paper"){
-            console.log("You lose, Paper beats Rock");
-            machine++;
-        }
-        else if (playerSelection == "paper" && computerSelection == "rock"){
-            console.log("You win, Paper beats Rock");
-            human++;
-        }
-        else if (playerSelection == "paper" && computerSelection == "scissors"){
-            console.log("You lose, Paper beats Scissors");
-            machine++;
-        }
-        else if (playerSelection == "scissors" && computerSelection == "rock"){
-            console.log("You lose, Rock beats Scissors");
-            machine++;
-        }
-        else if (playerSelection == "scissors" && computerSelection == "paper"){
-            console.log("You win, Scissors beats Paper");
-            human++;
-        }
-        else {
-            console.log("Draw");
-        }
-    }
+                //checks if the input works for the game, in a function
+                function pSelect(){
+
+                    if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors" ){
+                        console.log(playerSelection);
+                    } 
+                    else {
+                        alert("that is not in the game");
+                        return;
+                    }
+                }
+
+                pSelect(playerSelection);
+
+                //randomly generates a input for the computer
+                let computerSelection = ["rock","paper","scissors"];
+
+                function computerPlay(){
+                        computerSelection = computerSelection[Math.floor(Math.random() * computerSelection.length)];
+                        console.log(computerSelection);
+                    }
+                
+
+                computerPlay(computerSelection);
+
+                function outcome(){
+
+                    /*checks what the selections are, brings the HTML element into JS, 
+                    creates a div, names it winner, adds text and puts it on the page */
+                    if (playerSelection == "rock" && computerSelection == "scissors"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "rock beats scissors";
+                        resultCont.appendChild(res);
+
+                        human++;
+                    } 
+                    else if (playerSelection == "rock" && computerSelection == "paper"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "paper beats rock";
+                        resultCont.appendChild(res);
+
+                        machine++;
+                    }
+                    else if (playerSelection == "paper" && computerSelection == "rock"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "paper beats rock";
+                        resultCont.appendChild(res);
+
+                        human++;
+                    }
+                    else if (playerSelection == "paper" && computerSelection == "scissors"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "scissors beats paper";
+                        resultCont.appendChild(res);
+
+                        machine++;
+                    }
+                    else if (playerSelection == "scissors" && computerSelection == "rock"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "rock beats scissors";
+                        resultCont.appendChild(res);
+
+                        machine++;
+                    }
+                    else if (playerSelection == "scissors" && computerSelection == "paper"){
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "rock beats scissors";
+                        resultCont.appendChild(res);                        
+                        
+                        human++;
+                    }
+                    else {
+                        const resultCont = document.querySelector("#results");
+                        const res = document.createElement("div");
+                        res.classList.add('winner');
+                        res.textContent = "draw";
+                        resultCont.appendChild(res);                    }
+                }
+
+                outcome(playerSelection, computerSelection)
+                
+                document.getElementById("machine").textContent = machine;
+                document.getElementById("human").textContent = human;
+
+                //iincremenetRound goes up after each click till it == rounds. append player and machine outcomes in a final message
+                if(rounds == incrementRound){
+                    const finalResult = document.querySelector("#results");
+                    const overall = document.createElement("div");
+                    overall.classList.add('message');        
+                    finalResult.appendChild(overall); 
+
+                    overall.style.cssText = "color: yellow; font-size: 20px;"
+                    
+                    if (machine > human){
+                        overall.textContent = "you lose!";
+                    }
+                    else if (machine < human) {
+                        overall.textContent = "you win!";
+                    }
+                    else {
+                        overall.textContent = "no winner!";
+                    }
+                }
+            });    
+        });
+
+        
     
-    outcome(playerSelection, computerSelection)
-}
-
+        
+        
+        
     
-console.log("human: " + human);
-console.log("machine: " + machine);
+        
+
+            
+        
 
 
-</script>
+    </script>
+
+</html>
